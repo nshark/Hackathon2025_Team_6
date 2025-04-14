@@ -45,11 +45,14 @@ public class Main {
         long lastRatUpdate = System.currentTimeMillis();
         Cat cat = new Cat();
         cat.move();
-        //Rat rat = new Rat(5,5);
-        //rat.move(Maze);
+        Rat rat = new Rat(0,8);
+        rat.move(Maze, cat);
         // The array of equations for moving 0:N, 1:E, 2:S, 3:W, formatted as first addend, second addend
         int[][] equations = new int[][]{{2,3},{3,-3},{4,3},{5,5}};
         while(true){
+            if (Maze[cat.xpos][cat.ypos] == 3){
+                GUI.textArea.setText("You Win!");
+            }
             long frameBegin = System.currentTimeMillis();
             for (int i = 0; i < Maze.length; i++) {
                 for (int j = 0; j < Maze[0].length; j++) {
@@ -60,7 +63,7 @@ public class Main {
             }
             if (frameBegin - lastRatUpdate > 5000){
                 lastRatUpdate = frameBegin;
-                //rat.move(Maze);
+                rat.move(Maze, cat);
             }
             for (int i = 0; i < 4; i++) {
                 int dx = 0;
@@ -161,8 +164,11 @@ public class Main {
             GUI.g.setColor(Color.blue);
             GUI.g.drawImage(cat.Catpic, cat.xpos*24, cat.ypos*24, 24, 24, null);
             GUI.g.setColor(Color.red);
-            //GUI.g.draw(rat.rec);
+            GUI.g.draw(rat.rec);
             GUI.update();
+            if (cat.xpos == rat.xpos && cat.ypos == rat.ypos){
+                GUI.textArea.setText("You Lose!");
+            }
         }
 
     }
@@ -172,7 +178,7 @@ public class Main {
     public static int[] generateEquation(){
         Random rand = new Random();
 
-        int num1 = rand.nextInt(9);
+        int num1 = rand.nextInt(1,9);
         int num2 = rand.nextInt(-num1, num1);
         return new int[]{num1, num2};
     }
