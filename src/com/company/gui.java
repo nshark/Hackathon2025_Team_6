@@ -1,0 +1,29 @@
+package com.company;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class gui {
+    private final Canvas canvas;
+    private Graphics2D g;
+    keyListener listener = new keyListener();
+    public gui(){
+        JFrame jFrame = new JFrame("Raytracer");
+        canvas = new Canvas();
+        jFrame.add(canvas);
+        jFrame.setSize(500,500);
+        jFrame.setVisible(true);
+        canvas.addKeyListener(listener);
+        jFrame.requestFocus();
+        canvas.createBufferStrategy(2);
+        g = (Graphics2D) canvas.getBufferStrategy().getDrawGraphics();
+        g.clearRect(0, 0, 500, 500);
+    }
+    public void update(){
+        canvas.getBufferStrategy().show();
+        canvas.update(g);
+        g.dispose();
+        g = (Graphics2D) canvas.getBufferStrategy().getDrawGraphics();
+        g.clearRect(0, 0, 500, 500);
+    }
+}
