@@ -43,7 +43,6 @@ public class Main {
         gui GUI = new gui();
         long lastRatUpdate = System.currentTimeMillis();
         Cat cat = new Cat();
-        cat.move();
         Rat rat = new Rat(5,5);
         rat.move(Maze);
         // The array of equations for moving 0:N, 1:E, 2:S, 3:W, formatted as first addend, second addend
@@ -81,12 +80,18 @@ public class Main {
                         dx = -1;
                     }
                 }
-                if (equations[i][1] >= 0){
-                    GUI.g.drawString((equations[i][0] + "+" + equations[i][1]), cat.xpos*24 + 24*dx - 8, cat.ypos*24 + 24*dy + 16);
-                }
-                else{
-                    GUI.g.drawString((equations[i][0] + "-" + Math.abs(equations[i][1])), cat.xpos*24 + 32*dx - 8, cat.ypos*24 + 24*dy + 16);
-                }
+//                if (equations[i][1] >= 0){
+//                    GUI.g.setColor(new Color(40, 100, 200));
+//                    GUI.g.drawString((equations[i][0] + "+" + equations[i][1]), cat.xpos*24 + 27*dx - 5, cat.ypos*24 + 24*dy + 17);
+//                }
+//                else{
+//                    GUI.g.setColor(new Color(40, 100, 200));
+//                    GUI.g.drawString((equations[i][0] + "-" + Math.abs(equations[i][1])), cat.xpos*24 + 32*dx - 8, cat.ypos*24 + 24*dy + 16);
+//                }
+                int x = cat.xpos * 24 + 30 * dx - 1;
+                int y = cat.ypos * 24 + 24 * dy + 16;
+                String eq = equations[i][0] + (equations[i][1] >= 0 ? "+" : "-") + Math.abs(equations[i][1]);
+                GUI.g.drawString(eq, x, y);
             }
             if (GUI.buttonPressed && checkIfParsable.matcher(GUI.textArea.getText()).matches() && GUI.textArea.getText() != null){
                 for (int i = 0; i < 4; i++) {
@@ -94,22 +99,18 @@ public class Main {
                         switch (i){
                             case(0): {
                                 cat.ypos -= 1;
-                                cat.move();
                                 break;
                             }
                             case(1): {
                                 cat.xpos += 1;
-                                cat.move();
                                 break;
                             }
                             case(2):{
                                 cat.ypos += 1;
-                                cat.move();
                                 break;
                             }
                             case(3):{
                                 cat.xpos -= 1;
-                                cat.move();
                                 break;
                             }
                         }
@@ -119,7 +120,7 @@ public class Main {
                 GUI.buttonPressed = false;
             }
             GUI.g.setColor(Color.blue);
-            GUI.g.draw(cat.rec);
+            GUI.g.drawImage(cat.Catpic, cat.xpos*24, cat.ypos*24, 24, 24, null);
             GUI.g.setColor(Color.red);
             GUI.g.draw(rat.rec);
             GUI.update();

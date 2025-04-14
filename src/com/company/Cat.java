@@ -8,6 +8,8 @@ public class Cat {
     public int height;
     public boolean isAlive;
     public Rectangle rec;
+    public Image Catpic;
+
 
     public Cat(){
         xpos = 22;
@@ -15,7 +17,10 @@ public class Cat {
         width = 24;
         height = 24;
         isAlive = true;
+        Catpic = Toolkit.getDefaultToolkit().getImage("Image/Cat.png");
     }
+
+
 
     public void move(){
         rec = new Rectangle(xpos*24,ypos*24,width,height);
