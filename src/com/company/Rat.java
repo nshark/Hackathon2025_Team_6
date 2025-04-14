@@ -6,7 +6,7 @@ public class Rat {
     public String name;
     public int xpos;                //the x position
     public int ypos;                //the y position
-
+    public Image Ratpic;
     public int width;
     public int height;
     public Rectangle rec;
@@ -22,6 +22,7 @@ public class Rat {
         width = 24;
         height = 24;
 
+        Ratpic = Toolkit.getDefaultToolkit().getImage("Image/ratimage.png");
 
     } // constructor
 
