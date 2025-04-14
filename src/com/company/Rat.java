@@ -94,7 +94,7 @@ public class Rat {
             xpos += path.get(0)[0];
             ypos += path.get(0)[1];
         }
-        
+
         rec = new Rectangle(xpos * 24, ypos * 24, width, height);
     }
 }

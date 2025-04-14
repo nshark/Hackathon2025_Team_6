@@ -57,6 +57,7 @@ public class Main {
             for (int i = 0; i < Maze.length; i++) {
                 for (int j = 0; j < Maze[0].length; j++) {
                     if (Maze[i][j] == 1) {
+                        GUI.g.setColor(Color.BLACK);
                         GUI.g.fillRect(i*24, j*24, 24,24);
                     }
                 }
