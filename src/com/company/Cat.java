@@ -12,8 +12,8 @@ public class Cat {
 
 
     public Cat(){
-        xpos = 22;
-        ypos = 23;
+        xpos = 1;
+        ypos = 1;
         width = 24;
         height = 24;
         isAlive = true;

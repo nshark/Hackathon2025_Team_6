@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.regex.Pattern;
 import java.math.*;
 public class Main {
-    private static Pattern checkIfParsable = Pattern.compile("-?\\d+(\\.\\d+)?");
+    private static final Pattern checkIfParsable = Pattern.compile("-?\\d+(\\.\\d+)?");
     public static int[][] Maze = new int[][]{
             {0, 3, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
             {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
@@ -18,13 +18,13 @@ public class Main {
             {1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1},
             {1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1},
             {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1},
-            {1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1},
+            {1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1},
             {1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1},
             {1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1},
             {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1},
-            {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1},
+            {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1},
             {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1},
-            {1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1},
+            {1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1},
             {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1},
             {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1},
@@ -41,13 +41,18 @@ public class Main {
 
     public static void main(String[] args) {
         gui GUI = new gui();
+        boolean secondTry = false;
         long lastRatUpdate = System.currentTimeMillis();
         Cat cat = new Cat();
-        Rat rat = new Rat(5,5);
-        rat.move(Maze);
+        cat.move();
+        Rat rat = new Rat(0,8);
+        rat.move(Maze, cat);
         // The array of equations for moving 0:N, 1:E, 2:S, 3:W, formatted as first addend, second addend
         int[][] equations = new int[][]{{2,3},{3,-3},{4,3},{5,5}};
         while(true){
+            if (Maze[cat.xpos][cat.ypos] == 3){
+                GUI.textArea.setText("You Win!");
+            }
             long frameBegin = System.currentTimeMillis();
             for (int i = 0; i < Maze.length; i++) {
                 for (int j = 0; j < Maze[0].length; j++) {
@@ -58,7 +63,7 @@ public class Main {
             }
             if (frameBegin - lastRatUpdate > 5000){
                 lastRatUpdate = frameBegin;
-                rat.move(Maze);
+                rat.move(Maze, cat);
             }
             for (int i = 0; i < 4; i++) {
                 int dx = 0;
@@ -99,20 +104,57 @@ public class Main {
                     if (equations[i][0] + equations[i][1] == Integer.parseInt(GUI.textArea.getText())){
                         switch (i){
                             case(0): {
-                                cat.ypos -= 1;
+                                if (cat.ypos-1 >= 0) {
+                                    if (Maze[cat.xpos][cat.ypos - 1] != 1) {
+                                        cat.ypos -= 1;
+                                        cat.move();
+                                        secondTry=false;
+                                        equations = randomEquations();
+                                    }
+                                }
                                 break;
                             }
                             case(1): {
-                                cat.xpos += 1;
+                                if (cat.xpos+1 <= Maze.length) {
+                                    if (Maze[cat.xpos + 1][cat.ypos] != 1) {
+                                        cat.xpos += 1;
+                                        cat.move();
+                                        secondTry=false;
+                                        equations = randomEquations();
+                                    }
+                                }
                                 break;
                             }
                             case(2):{
-                                cat.ypos += 1;
+                                if (cat.ypos+1 <= Maze.length) {
+                                    if (Maze[cat.xpos][cat.ypos + 1] != 1) {
+                                        cat.ypos += 1;
+                                        cat.move();
+                                        secondTry=false;
+                                        equations = randomEquations();
+                                    }
+                                }
                                 break;
                             }
                             case(3):{
-                                cat.xpos -= 1;
+                                if (cat.xpos-1 >= 0) {
+                                    if (Maze[cat.xpos-1][cat.ypos] != 1) {
+                                        cat.xpos -= 1;
+                                        cat.move();
+                                        secondTry=false;
+                                        equations = randomEquations();
+                                    }
+                                }
                                 break;
+                            }
+                            default:{
+                                if(secondTry){
+                                    equations = randomEquations();
+                                    secondTry=false;
+                                }
+                                else{
+                                    secondTry=true;
+                                }
                             }
                         }
                     }
@@ -126,15 +168,20 @@ public class Main {
             GUI.g.setColor(Color.red);
             GUI.g.draw(rat.rec);
             GUI.update();
+            if (cat.xpos == rat.xpos && cat.ypos == rat.ypos){
+                GUI.textArea.setText("You Lose!");
+            }
         }
 
     }
-
-    public static String generateEquation(){
+    public static int[][] randomEquations(){
+        return new int[][]{generateEquation(), generateEquation(), generateEquation(), generateEquation()};
+    }
+    public static int[] generateEquation(){
         Random rand = new Random();
 
-        int num1 = rand.nextInt(50);
+        int num1 = rand.nextInt(1,9);
         int num2 = rand.nextInt(-num1, num1);
-        return num1 + " + " + num2 + " = ?";
+        return new int[]{num1, num2};
     }
 }
